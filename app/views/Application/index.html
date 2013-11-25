@@ -1,4 +1,44 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'Things | Main' /}
 
-#{welcome /}
+
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Welcome to <b>Things</b></h1>
+      </div>
+    </div>    
+
+#{form @Application.addThing()}
+  <div class="row collapse">
+    <div class="small-2 large-1 columns">
+      <span class="prefix">Things:</span>
+    </div>
+    <div class="small-9 large-10 columns">
+      <input type="text" name="title" placeholder="Enter your thing...">
+    </div>
+    <div class="small-1 large-1 columns">
+          <input type="submit" class="button postfix" value="Go" />
+    </div>
+  </div>
+#{/form}  
+  
+   
+
+#{if taskList}
+	#{list items:taskList, as:'task'}
+	<div class="row collapse">
+      <div class="large-12 medium-12 columns">
+        <div class="callout panel">
+          <p>${task.title}</p>
+        </div>
+      </div>
+  	</div>
+	#{/list}
+#{/if}
+#{else}
+	<div class="row">
+	  <div class="large-12 columns">
+	    <H2>You don't have any task.</H2>
+	  </div>
+	</div> 
+#{/else}
