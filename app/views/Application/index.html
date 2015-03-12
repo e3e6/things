@@ -3,8 +3,18 @@
 
 
     <div class="row">
-      <div class="large-12 columns">
+      <div class="large-11 columns">
         <h1>Welcome to <b>Things</b></h1>
+      </div>
+      <div class="large-1 columns">
+        <a href="#"> 
+#{if username} 
+  ${username}
+#{/if}
+#{else}
+<a href="login">Login&nbsp;or&nbsp;Register&nbsp;now</a>
+#{/else}
+</a>
       </div>
     </div>    
 
@@ -21,15 +31,18 @@
     </div>
   </div>
 #{/form}  
-  
-   
+
+
 
 #{if taskList}
 	#{list items:taskList, as:'task'}
 	<div class="row collapse">
       <div class="large-12 medium-12 columns">
         <div class="callout panel">
-          <p>${task.title}</p>
+          <p>"${task.title}"</p>
+          <p>${task.content}</p>
+          --
+          <p>${task.createdBy.fullname}@${task.createdOn}</p>
         </div>
       </div>
   	</div>

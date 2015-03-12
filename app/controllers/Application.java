@@ -7,7 +7,8 @@ import java.util.*;
 
 import models.*;
 
-public class Application extends Controller {
+
+public class Application extends CRUD {
 
 	@Before(priority = 1)
     public static void testData() {
@@ -21,10 +22,10 @@ public class Application extends Controller {
 			User u = (User) User.findAll().iterator().next();
 
 			if(u != null){
-				Task t1 = new Task(u, "Some Task", "Task's Content");
+				Task t1 = new Task(u, "Some Task", "Test Data 1");
 					 t1.create();
 					 
-				Task t2 = new Task(u, "Second Some Task", "Second Task's Content");
+				Task t2 = new Task(u, "Second Some Task", "Test data 2");
 					 t2.create();
 			}
 			
@@ -34,18 +35,30 @@ public class Application extends Controller {
 	
 	public static void index() {
 //        Task frontPost = Task.find("order by createdOn desc").first();
-//        List<Task> taskList = Task.find(
-//            "order by createdOn desc"
-//        ).from(1).fetch(10);
         
-        List<Task> taskList = Task.findAll();
-        List<User> userList = User.findAll();
         
-        render(/*frontPost, */userList, taskList);
+//        List<Task> taskList = Task.findAll();
+        
+
+        if(Security.isConnected()){
+        	String username = Security.connected(); //email used as username
+        	
+        	User user = User.find("byEmail", username).first();
+        	
+        	List<Task> taskList = Task.find(
+                    "byCreatedBy"
+                , user).fetch();
+        	
+        	render(/*frontPost, */username, taskList);
+        } else {
+        	render(/*frontPost, */Collections.emptyList());
+        }
+        
     }
 	
 	public static void addThing(String title) {
-	    User u = (User) User.findAll().iterator().next();
+		
+	    User u = (User) User.find("byEmail", Security.connected()).first();
 	    if (u != null){
 		    Task t1 = new Task(u, title, "Task's Content");
 			 	 t1.create();

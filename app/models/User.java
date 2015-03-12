@@ -25,10 +25,12 @@ public class User extends Model {
         this.isAdmin = isAdmin;
     }
     
-    
+  //TODO Security issue  
 	public static void prePopuplate() {
 		new User("alexk","testk").create();
 		new User("alexz","textz").create();
 	}
- 
+    public static User connect(String email, String password) {
+        return find("byEmailAndPassword", email, password).first();
+    }
 }
