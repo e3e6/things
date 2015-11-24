@@ -49,7 +49,9 @@ public class Application extends CRUD {
                     "byCreatedBy"
                 , user).fetch();
         	
-        	render(/*frontPost, */username, taskList);
+        	String fullname = user.fullname;
+        	
+        	render(/*frontPost, */username, fullname, taskList);
         } else {
         	render(/*frontPost, */Collections.emptyList());
         }
@@ -59,9 +61,15 @@ public class Application extends CRUD {
 	public static void addThing(String title) {
 		
 	    User u = (User) User.find("byEmail", Security.connected()).first();
+	    
+	    if(u == null){
+	    	//TODO Lazy registration
+	    	u = User.createRandomUser();
+	    	session.put("username", u.email);
+	    }
+	    
 	    if (u != null){
-		    Task t1 = new Task(u, title, "Task's Content");
-			 	 t1.create();
+		    new Task(u, title, "Task's Content").create();
 	    }
 	    
 	    index();
