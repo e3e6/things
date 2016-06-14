@@ -16,6 +16,13 @@ public class User extends Model {
     public String fullname;
     public boolean isAdmin;
     
+    /**
+     * unregistered user constructor
+     * @param fullname
+     */
+    public User(String fullname) {
+    	this(fullname, null, fullname, false);
+    }
     
     public User(String email, String password) {
     	this(email, password, email, true);
@@ -26,27 +33,5 @@ public class User extends Model {
         this.password = password;
         this.fullname = fullname;
         this.isAdmin = isAdmin;
-    }
-    
-  //TODO Security issue  
-	public static void prePopuplate() {
-		new User("alexk","testk").create();
-		new User("alexz","textz").create();
-	}
-    public static User connect(String email, String password) {
-        return find("byEmailAndPassword", email, password).first();
-    }
-    
-    public static User createRandomUser(){
-    	NameGenerator ng = new NameGenerator();
-    	String userName = null;
-    	
-    	while (userName == null || find("byEmail", userName).first() != null){
-    		userName = ng.getName() + "@email.fake";
-    	}
-    	
-    	User u = new User(userName, null);    	
-    	u.create();
-    	return u;
     }
 }

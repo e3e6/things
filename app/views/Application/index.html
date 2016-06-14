@@ -7,14 +7,14 @@
         <h1>Welcome to <b>Things</b></h1>
       </div>
       <div class="large-1 columns">
-        <a href="#"> 
-#{if username} 
-  ${fullname}
+        
+#{if user} 
+  <a href="/logout">${user.fullname}</a>
 #{/if}
 #{else}
-<a href="login">Login&nbsp;or&nbsp;Register&nbsp;now</a>
+<a href="/register">Login&nbsp;or&nbsp;Register&nbsp;now</a>
 #{/else}
-</a>
+
       </div>
     </div>    
 
